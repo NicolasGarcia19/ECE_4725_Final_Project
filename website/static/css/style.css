@@ -1,1 +1,15 @@
 body { background: white; }
+
+#doodle-canvas {
+    border: 3px solid black;
+    background: white;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    touch-action: none;
+}
+
+h1 {
+    text-align: center;
+}
