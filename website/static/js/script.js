@@ -99,10 +99,20 @@ async function sendMood(mood) {
 const helloBtn = document.querySelector('.mood-btn[data-mood="hello"]');
 helloBtn.addEventListener("click", () => {
     sendMood("hello");
+});
+const missBtn = document.querySelector('.mood-btn[data-mood="miss"]');
+missBtn.addEventListener("click", () => {
     sendMood("miss");
-    sendMood("love");
+});
+const proudBtn = document.querySelector('.mood-btn[data-mood="proud"]');
+proudBtn.addEventListener("click", () => {
     sendMood("proud");
 });
+const loveBtn = document.querySelector('.mood-btn[data-mood="love"]');
+loveBtn.addEventListener("click", () => {
+    sendMood("love");
+});
+
 
 // haptic hug
 const hugBtn = document.getElementById('hug-btn');
