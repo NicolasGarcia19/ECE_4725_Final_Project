@@ -33,12 +33,19 @@ def turn_led_on():
         return jsonify({"error": "unknown mood"}), 400
 
     led.on()
-    send_to_pitft("Hello")
+    send_to_pitft(mood)
 
     return jsonify({"status": "on", "mood": mood})
 
+# @app.route("/motor/on", methods=["POST"])
+# def buzz_motor():
+#     motor.blink(on_time = hug_seconds)
+#     return jsonify({"status": "buzzing"})
+    
+
+
 def send_to_pitft(message):
-    HOST = '127.0.01'
+    HOST = '127.0.0.1'
     PORT = 5001
 
     try:
@@ -49,7 +56,6 @@ def send_to_pitft(message):
 
     except OSError as e:
         print("TCP communication error:", e)
-
 
 if __name__ == "__main__":
     # use_reloader=False: stops Flask from starting the file twice,
