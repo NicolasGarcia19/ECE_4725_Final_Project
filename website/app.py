@@ -33,6 +33,8 @@ def turn_led_on():
         return jsonify({"error": "unknown mood"}), 400
 
     led.on()
+    send_to_pitft("Hello")
+
     return jsonify({"status": "on", "mood": mood})
 
 def send_to_pitft(message):
