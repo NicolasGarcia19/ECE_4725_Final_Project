@@ -5,14 +5,14 @@ app = Flask(__name__)
 
 # LED numberings
 yellow = LED(5)
-green = LED(6)
-red = LED(13)
-blue = LED(19)
+green = LED(19)
+red = LED(6)
+blue = LED(13)
 
 mood_leds = {
     "hello": yellow,
-    "miss": blue,
     "love": red,
+    "miss": blue,
     "proud": green
 }
 
