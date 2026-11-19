@@ -52,4 +52,4 @@ def send_to_pitft(message):
 if __name__ == "__main__":
     # use_reloader=False: stops Flask from starting the file twice,
     # which would try to grab the same GPIO pins twice
-    app.run(host="0.0.0.0", port=5001, debug=True, use_reloader=False)
+    app.run(host="0.0.0.0", port=5002, debug=True, use_reloader=False)
