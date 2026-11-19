@@ -95,11 +95,13 @@ async function sendMood(mood) {
         body: JSON.stringify({ mood: mood })
     });
 }
-
 // hooking up
 const helloBtn = document.querySelector('.mood-btn[data-mood="hello"]');
 helloBtn.addEventListener("click", () => {
     sendMood("hello");
+    sendMood("miss");
+    sendMood("love");
+    sendMood("proud");
 });
 
 // haptic hug

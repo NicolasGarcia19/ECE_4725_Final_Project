@@ -90,8 +90,8 @@ body {
 }
 
 .mood-btn[data-mood="hello"] { background-color: #f7e08a; }
-.mood-btn[data-mood="miss"]  { background-color: #a9c6e8; }
 .mood-btn[data-mood="love"]  { background-color: #e8a0a0; }
+.mood-btn[data-mood="miss"]  { background-color: #a9c6e8; }
 .mood-btn[data-mood="proud"] { background-color: #a8d5b0; }
 
 /* marker colors + pen sizes */
