@@ -1,15 +1,225 @@
-body { background: white; }
+/* warm light-gray page with faint graph-paper lines */
+body {
+  background-color: #f5f4f2;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
 
 #doodle-canvas {
-    border: 3px solid black;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 60%, #f1f2f4);
+    border: 3px solid #2a2a2e;
     display: block;
-    margin: 0 auto;
-    max-width: 100%;
+    margin: 0;
     height: auto;
     touch-action: none;
+    /* pencil cursor */
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><g transform='rotate(-45 16 16)' stroke='%232a2a2e' stroke-width='0.8' stroke-linejoin='round'><polygon points='-2,16 7,12.5 7,19.5' fill='%23ecd2ad'/><polygon points='-2,16 2,14.44 2,17.56' fill='%233b3b40'/><rect x='29' y='12.5' width='5' height='7' rx='1.5' fill='%23e3a3b1'/><rect x='7' y='12.5' width='20' height='7' fill='%23f7e08a'/><rect x='27' y='12.5' width='2.5' height='7' fill='%23c8c9cd'/></g></svg>") 3 29, auto;
+}
+
+/* eraser cursor: same pencil flipped so the eraser end is the point */
+#doodle-canvas.erasing {
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><g transform='rotate(135 16 16)' stroke='%232a2a2e' stroke-width='0.8' stroke-linejoin='round'><polygon points='-2,16 7,12.5 7,19.5' fill='%23ecd2ad'/><polygon points='-2,16 2,14.44 2,17.56' fill='%233b3b40'/><rect x='29' y='12.5' width='5' height='7' rx='1.5' fill='%23e3a3b1'/><rect x='7' y='12.5' width='20' height='7' fill='%23f7e08a'/><rect x='27' y='12.5' width='2.5' height='7' fill='%23c8c9cd'/></g></svg>") 4 28, auto;
+}
+
+/* tool bar to the left of the whiteboard */
+.toolbar {
+    position: absolute;
+    right: calc(100% + 20px);
+    top: -3px;
+    bottom: -3px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 0;
+    box-sizing: border-box;
+    background-color: white;
+    border: 3px solid #2a2a2e;
+}
+
+/* round tool buttons */
+.tool-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #2a2a2e;
+    padding: 0;
+    font-family: 'Mansalva', cursive;
+    font-size: 16px;
+    color: #3b3b40;
+    cursor: pointer;
+}
+
+#clear-btn {
+    background-color: white;
+}
+
+#eraser-btn {
+    background-color: #e3a3b1;
+}
+
+/* eraser turned on: bolder black outline */
+#eraser-btn.active {
+    box-shadow: 0 0 0 3px #2a2a2e;
+}
+
+/* mood toolbar: same as the left toolbar, mirrored to the right side */
+.mood-toolbar {
+    right: auto;
+    left: calc(100% + 20px);
+}
+
+/* mood buttons: slightly bigger circles so the longer phrases fit */
+.mood-btn {
+    width: 66px;
+    height: 66px;
+    padding: 0 6px;
+    font-size: 13px;
+    line-height: 1.05;
+    transition: transform 0.1s;
+}
+
+/* quick "pop" when clicked */
+.mood-btn:active {
+    transform: scale(0.88);
+}
+
+.mood-btn[data-mood="hello"] { background-color: #f7e08a; }
+.mood-btn[data-mood="miss"]  { background-color: #a9c6e8; }
+.mood-btn[data-mood="love"]  { background-color: #e8a0a0; }
+.mood-btn[data-mood="proud"] { background-color: #a8d5b0; }
+
+/* ---- marker colors + pen sizes (left toolbar) ---- */
+.swatches,
+.sizes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.swatch,
+.size-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #2a2a2e;
+    padding: 0;
+    cursor: pointer;
+}
+
+.size-btn {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* the dot inside a size button */
+.size-btn span {
+    display: block;
+    border-radius: 50%;
+    background-color: #2a2a2e;
+}
+
+/* bolder black outline on the selected color / size */
+.swatch.active,
+.size-btn.active {
+    box-shadow: 0 0 0 2px #2a2a2e;
+}
+
+/* ---- send button, resting on the marker tray ---- */
+#send-btn {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: -19px;
+    transform: translateX(-50%);
+    height: 32px;
+    padding: 0 18px;
+    border-radius: 16px;
+    border: 3px solid #2a2a2e;
+    background-color: white;
+    font-family: 'Mansalva', cursive;
+    font-size: 17px;
+    color: #3b3b40;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+#send-btn:active {
+    transform: translateX(-50%) scale(0.92);
+}
+
+#send-btn:disabled {
+    cursor: default;
+}
+
+/* ---- hug heart, under the board ---- */
+.hug-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -15px;
+    padding: 0 0 40px;
+}
+
+#hug-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transform: scale(1);
+    /* springy shrink back when you let go */
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* while held: grow steadily to 1.8x over 2s, then stay there (the max) */
+#hug-btn.holding {
+    transform: scale(1.8);
+    transition: transform 2s linear;
+}
+
+.heart {
+    display: block;
+    width: 70px;
+    height: 70px;
+}
+
+/* shake the whole time it's held */
+#hug-btn.holding .heart {
+    animation: shake 0.15s infinite;
+}
+
+@keyframes shake {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(-2px, 1px) rotate(-4deg); }
+    50%  { transform: translate(1px, -1px) rotate(3deg); }
+    75%  { transform: translate(2px, 1px) rotate(-2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.hug-label {
+    margin: 8px 0 0;
+    font-family: 'Mansalva', cursive;
+    font-size: 18px;
+    color: #3b3b40;
 }
 
 h1 {
     text-align: center;
+    font-family: 'Mansalva', cursive;
+    font-size: 50px;
+    color: #3b3b40;
+    text-decoration: underline wavy #e3a3b1;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 12px;
 }

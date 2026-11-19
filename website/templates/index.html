@@ -5,13 +5,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Linked Devices</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="/static/css/style.css">
+
+  <style>
+    /* whiteboard frame */
+    .rectangle {
+      position: relative;
+      width: fit-content;
+      padding: 14px;
+      background-color: #c49a6c;
+      /* wood grain: faint dark and light lines */
+      background-image: repeating-linear-gradient(
+        rgba(90, 55, 25, 0.12) 0 2px,
+        transparent 2px 9px,
+        rgba(255, 235, 200, 0.10) 9px 11px,
+        transparent 11px 23px
+      );
+      border: 3px solid #2a2a2e;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      margin: 30px auto 60px;
+    }
+
+    /* marker tray */
+    .rectangle::after {
+      content: "";
+      position: absolute;
+      left: 28%;
+      right: 28%;
+      bottom: -14px;
+      height: 16px;
+      background-color: #c49a6c;
+      background-image: repeating-linear-gradient(
+        rgba(90, 55, 25, 0.15) 0 1px,
+        transparent 1px 5px
+      );
+      border: 3px solid #2a2a2e;
+    }
+
+  </style>
+
 </head>
 
 <body>
   <h1>Linked Devices</h1>
-  <canvas id="doodle-canvas" width="700" height="500"></canvas>
+  <div class="rectangle">
+    <div class="toolbar">
+      <button id="clear-btn" class="tool-btn">Clear</button>
+      <button id="eraser-btn" class="tool-btn">Eraser</button>
+
+      <!-- marker colors -->
+      <div class="swatches">
+        <button class="swatch active" data-color="#2a2a2e" title="Black" style="background-color: #2a2a2e;"></button>
+        <button class="swatch" data-color="#c9605a" title="Red" style="background-color: #c9605a;"></button>
+        <button class="swatch" data-color="#4a78b5" title="Blue" style="background-color: #4a78b5;"></button>
+        <button class="swatch" data-color="#5a9a6a" title="Green" style="background-color: #5a9a6a;"></button>
+        <button class="swatch" data-color="#8a6bb0" title="Purple" style="background-color: #8a6bb0;"></button>
+      </div>
+
+      <!-- pen sizes (the dot inside shows the size) -->
+      <div class="sizes">
+        <button class="size-btn active" data-size="4" title="Thin"><span style="width: 4px; height: 4px;"></span></button>
+        <button class="size-btn" data-size="10" title="Thick"><span style="width: 10px; height: 10px;"></span></button>
+      </div>
+    </div>
+    <div class="toolbar mood-toolbar">
+      <button class="tool-btn mood-btn" data-mood="hello">Hello</button>
+      <button class="tool-btn mood-btn" data-mood="miss">I miss you</button>
+      <button class="tool-btn mood-btn" data-mood="love">I love you</button>
+      <button class="tool-btn mood-btn" data-mood="proud">I'm proud of you</button>
+    </div>
+    <canvas id="doodle-canvas" width="700" height="500"></canvas>
+    <button id="send-btn">Send ✈</button>
+  </div>
+
+  <!-- hug: press and hold the heart -->
+  <div class="hug-area">
+    <button id="hug-btn" aria-label="Hold to send a hug">
+      <svg class="heart" viewBox="0 0 24 24">
+        <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.5c2.2 0 3.6 1.2 5.4 3.2 1.8-2 3.2-3.2 5.4-3.2 3.7 0 5.7 3.9 4.2 7.3C19.5 16.4 12 21 12 21z"
+              fill="#e8a0a0" stroke="#2a2a2e" stroke-width="1.2" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <p class="hug-label">hold to hug</p>
+  </div>
   <script src="/static/js/script.js"></script>
 </body>
+
 
 </html>
