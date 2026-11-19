@@ -84,33 +84,23 @@ document.querySelectorAll('.size-btn').forEach((btn) => {
 });
 
 // send doodle 
-const sendBtn = document.getElementById('send-btn');
 
-// logs sending
-function sendDoodle(image) {
-    console.log("Doodle sent:", image.slice(0, 60) + "...");
+
+// MOOD SHARING
+// sends to the pi
+async function sendMood(mood) {
+    const response = await fetch("/led/on", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mood: mood })
+    });
 }
 
-sendBtn.addEventListener("click", () => {
-    // turn the drawing into an image
-    sendDoodle(canvas.toDataURL('image/png'));
-
-    // sent message
-    sendBtn.textContent = 'Sent! ♡';
-    sendBtn.disabled = true;
-    setTimeout(() => {
-        sendBtn.textContent = 'Send ✈';
-        sendBtn.disabled = false;
-    }, 1500);
+// hooking up
+const helloBtn = document.querySelector('.mood-btn[data-mood="hello"]');
+helloBtn.addEventListener("click", () => {
+    sendMood("hello");
 });
-
-// mood sharing
-
-// Sends a mood to the other device.
-function sendMood(mood) {
-    console.log("Mood sent:", mood);
-}
-
 
 // haptic hug
 const hugBtn = document.getElementById('hug-btn');
