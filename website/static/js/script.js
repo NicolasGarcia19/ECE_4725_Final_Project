@@ -28,7 +28,7 @@ canvas.addEventListener("mouseup", (e) => {
     isDrawing = false;
 });
 
-// ---- tool buttons ----
+// tool buttons
 const clearBtn = document.getElementById('clear-btn');
 const eraserBtn = document.getElementById('eraser-btn');
 let isErasing = false;
@@ -45,26 +45,25 @@ function usePen() {
     canvas.classList.remove('erasing');
 }
 
-// Clear: wipe the whole canvas
+// Clear
 clearBtn.addEventListener("click", () => {
     line.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-// Eraser: click to turn on, click again to go back to the pen
+// Eraser
 eraserBtn.addEventListener("click", () => {
     if (isErasing) {
         usePen();
         return;
     }
     isErasing = true;
-    // "destination-out" makes strokes remove ink instead of adding it
     line.globalCompositeOperation = 'destination-out';
     line.lineWidth = 20;
     eraserBtn.classList.add('active');   // pressed-in look
     canvas.classList.add('erasing');     // flipped-pencil cursor
 });
 
-// Marker colors: pick one, move the ring to it, go back to the pen
+// Marker colors
 document.querySelectorAll('.swatch').forEach((btn) => {
     btn.addEventListener("click", () => {
         document.querySelectorAll('.swatch').forEach((b) => b.classList.remove('active'));
@@ -74,7 +73,7 @@ document.querySelectorAll('.swatch').forEach((btn) => {
     });
 });
 
-// Pen sizes: same idea
+// Pen sizes
 document.querySelectorAll('.size-btn').forEach((btn) => {
     btn.addEventListener("click", () => {
         document.querySelectorAll('.size-btn').forEach((b) => b.classList.remove('active'));
@@ -84,20 +83,19 @@ document.querySelectorAll('.size-btn').forEach((btn) => {
     });
 });
 
-// ---- send doodle ----
+// send doodle 
 const sendBtn = document.getElementById('send-btn');
 
-// Sends the drawing to the other device.
-// For now it only logs it; the real sending to the Pi goes here later.
+// logs sending
 function sendDoodle(image) {
     console.log("Doodle sent:", image.slice(0, 60) + "...");
 }
 
 sendBtn.addEventListener("click", () => {
-    // turn the drawing into an image (a long text string of PNG data)
+    // turn the drawing into an image
     sendDoodle(canvas.toDataURL('image/png'));
 
-    // little "Sent!" message, then back to normal
+    // sent message
     sendBtn.textContent = 'Sent! ♡';
     sendBtn.disabled = true;
     setTimeout(() => {
@@ -106,33 +104,25 @@ sendBtn.addEventListener("click", () => {
     }, 1500);
 });
 
-// ---- mood sharing ----
+// mood sharing
 
 // Sends a mood to the other device.
-// For now it only logs it; the real sending to the Pi goes here later.
 function sendMood(mood) {
     console.log("Mood sent:", mood);
 }
 
-// Hook up every mood button; each one knows its mood from data-mood="..."
-document.querySelectorAll('.mood-btn').forEach((btn) => {
-    btn.addEventListener("click", () => {
-        sendMood(btn.dataset.mood);
-    });
-});
 
-// ---- haptic hug ----
+// haptic hug
 const hugBtn = document.getElementById('hug-btn');
 const MAX_HOLD_MS = 2000;   // holding this long (or longer) = max intensity
 let hugStart = null;
 
-// Sends a hug to the other device. intensity is 1 (quick tap) to 10 (held 2s+).
-// For now it only logs it; the real sending to the Pi goes here later.
+// Sends a hug to the other device
 function sendHug(intensity) {
     console.log("Hug sent, intensity:", intensity);
 }
 
-// Press: start the timer; the CSS "holding" class makes it grow + shake
+// press hug
 hugBtn.addEventListener("pointerdown", (e) => {
     e.preventDefault();
     hugStart = performance.now();
@@ -140,7 +130,7 @@ hugBtn.addEventListener("pointerdown", (e) => {
     hugBtn.setPointerCapture(e.pointerId);  // keep tracking even if the finger slides off
 });
 
-// Release: work out how long it was held, send it, shrink back
+// release hug
 function endHug() {
     if (hugStart === null)
         return;

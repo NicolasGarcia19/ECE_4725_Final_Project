@@ -63,18 +63,18 @@ body {
     background-color: #e3a3b1;
 }
 
-/* eraser turned on: bolder black outline */
+/* eraser turned on */
 #eraser-btn.active {
     box-shadow: 0 0 0 3px #2a2a2e;
 }
 
-/* mood toolbar: same as the left toolbar, mirrored to the right side */
+/* mood toolbar */
 .mood-toolbar {
     right: auto;
     left: calc(100% + 20px);
 }
 
-/* mood buttons: slightly bigger circles so the longer phrases fit */
+/* mood buttons */
 .mood-btn {
     width: 66px;
     height: 66px;
@@ -94,7 +94,7 @@ body {
 .mood-btn[data-mood="love"]  { background-color: #e8a0a0; }
 .mood-btn[data-mood="proud"] { background-color: #a8d5b0; }
 
-/* ---- marker colors + pen sizes (left toolbar) ---- */
+/* ---- marker colors + pen sizes ---- */
 .swatches,
 .sizes {
     display: flex;
@@ -120,20 +120,19 @@ body {
     justify-content: center;
 }
 
-/* the dot inside a size button */
+/* dot inside size button */
 .size-btn span {
     display: block;
     border-radius: 50%;
     background-color: #2a2a2e;
 }
 
-/* bolder black outline on the selected color / size */
 .swatch.active,
 .size-btn.active {
     box-shadow: 0 0 0 2px #2a2a2e;
 }
 
-/* ---- send button, resting on the marker tray ---- */
+/* ---- send button ---- */
 #send-btn {
     position: absolute;
     z-index: 1;
@@ -160,7 +159,7 @@ body {
     cursor: default;
 }
 
-/* ---- hug heart, under the board ---- */
+/* ---- hug heart ---- */
 .hug-area {
     display: flex;
     flex-direction: column;
@@ -182,7 +181,7 @@ body {
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* while held: grow steadily to 1.8x over 2s, then stay there (the max) */
+/* while held */
 #hug-btn.holding {
     transform: scale(1.8);
     transition: transform 2s linear;
